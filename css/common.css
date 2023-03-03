@@ -97,25 +97,25 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 .game_area{ position: absolute; top: 70px; left: 1%; width: 98%; height: 70%;}
 
 @media all and (min-width:768px){
-    .game_area{ top: 85px;}
+    .game_area{ top: 85px; height: 71%;}
 }
 @media all and (min-width:960px){
-    .game_area{ height: 75%;}
+    .game_area{ height: 72%;}
 }
 @media all and (min-width:1024px){
-    .game_area{ height: 75.5%;}
+    .game_area{ height: 74%;}
 }
 @media all and (min-width:1280px){
-    .game_area{ top: 90px; height: 78%;}
+    .game_area{ top: 90px; height: 76%;}
 }
 @media all and (min-width:1440px){
-    .game_area{ top: 100px; height: 78.5%;}
+    .game_area{ top: 100px; height: 77%;}
 }
 @media all and (min-width:1680px){
-    .game_area{ top: 115px;}
+    .game_area{ top: 115px; height: 75%;}
 }
 @media all and (min-width:1920px){
-    .game_area{ height: 79%;}
+    .game_area{ height: 75%;}
 }
 
 

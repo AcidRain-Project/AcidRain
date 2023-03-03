@@ -1,0 +1,183 @@
+@charset "utf-8";
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{ margin: 0; padding: 0; box-sizing: border-box;}
+ol, ul, li{ list-style: none;}
+a{ outline: 0; text-decoration: none; color: inherit;}
+img{ border: 0; image-rendering: -moz-crisp-edges; image-rendering: -o-crisp-edges; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; -ms-interpolation-mode: nearest-neighbor;}
+input, textarea, select{ outline: none; border: 0;} 
+input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder{ color: transparent;}
+input:focus:-moz-placeholder, textarea:focus:-moz-placeholder{ color: transparent;}
+input:focus::-moz-placeholder, textarea:focus::-moz-placeholder{ color: transparent;}
+input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder{ color: transparent;}
+
+body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; overflow: hidden; font-family: 'NanumSquareNeo-Variable';}
+
+.main_wrap{ width: 100%; height: 100%; position: relative; background-position: bottom; background-attachment: fixed; background-size: cover;}
+.main_bg{ width: 100%; height: 100%; display: block; background-position: bottom; background-attachment: fixed; background-size: cover;}
+
+
+/* header_wrap */
+.header_wrap{ position: absolute; left: 0; top: 0; width: 100%; height: 70px; background-color: #fff; border-bottom: 3px solid #71aee1; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+.header_area{ margin: 0 auto; width: 90%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between;}
+
+.view_box{ width: 70%; height: 70px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+
+.view_inner{ width: 100%; height: 90%; display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; -webkit-flex-wrap: wrap; flex-wrap: wrap; justify-content: flex-start; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+
+.view_box span{ width: 19%; height: 40%; text-align: center; font-size: 13px; line-height: 1.8; margin-right: 3px; border: 1px solid #111;}
+.view_box span.active{ display: none;}
+
+.info_box{ width: 25%;}
+.score_text{ font-size: 18px; text-align: center; margin-bottom: 7px;}
+
+.score_time{ position: relative; width: 100%; margin: 0 auto; border-radius: 20px;}
+.score_time_img{ display: block; width: 100%; max-width: 450px;}
+.score_bar_inner{ position: absolute; right: 0; top: 0; bottom: 0; border-radius: 0 20px 20px 0; background: #2f194a;} 
+
+@media all and (min-width:768px){
+    .header_wrap{ height: 85px;}
+
+    .view_box{ width: 68%; height: 85px;}
+    .view_box span{ font-size: 15px;}
+}
+@media all and (min-width:960px){
+    .view_box{ width: 70%;}
+    .view_box span{ font-size: 16px; margin-right: 5px;}
+    
+    .info_box{ width: 20%;}
+    .score_text{ font-size: 20px;}
+}
+@media all and (min-width:1024px){
+    .view_box span{ font-size: 17px;}
+    
+    .info_box{ width: 18%;}
+    .score_text{ font-size: 24px;}
+}
+@media all and (min-width:1280px){
+    .header_wrap{ height: 90px;}
+        
+    .view_box{ width: 75%; height: 90px;}
+    .view_box span{ font-size: 16px; margin-right: 7px;}
+    
+    .info_box{ width: 15%;}
+    .score_text{ font-size: 24px;}
+}
+@media all and (min-width:1440px){
+    .header_wrap{ height: 100px;}
+
+    .view_box{ height: 100px;}
+    .view_box span{ font-size: 17px;}
+
+    .info_box{ width: 15%;}
+    .score_text{ font-size: 26px; margin-bottom: 10px;}
+}
+@media all and (min-width:1680px){
+    .header_wrap{ height: 115px;}
+
+    .view_box{ height: 115px;}
+    .view_box span{ font-size: 20px;}
+
+    .info_box{ width: 15%;}
+    .score_text{ font-size: 28px;}
+}
+@media all and (min-width:1920px){
+    .view_box{ width: 80%;}
+    .view_box span{ font-size: 22px;}
+}
+
+
+/* game_wrap */
+.game_wrap{ position: relative; width: 100%; height: 100%;}
+.game_area{ position: absolute; top: 70px; left: 1%; width: 98%; height: 70%;}
+
+@media all and (min-width:768px){
+    .game_area{ top: 85px;}
+}
+@media all and (min-width:960px){
+    .game_area{ height: 75%;}
+}
+@media all and (min-width:1024px){
+    .game_area{ height: 75.5%;}
+}
+@media all and (min-width:1280px){
+    .game_area{ top: 90px; height: 78%;}
+}
+@media all and (min-width:1440px){
+    .game_area{ top: 100px; height: 78.5%;}
+}
+@media all and (min-width:1680px){
+    .game_area{ top: 115px;}
+}
+@media all and (min-width:1920px){
+    .game_area{ height: 79%;}
+}
+
+
+/* textbox_wrap */
+.textbox{ width: 100%; position: absolute; bottom: 3%; left: 0; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center;}
+.textbox_wrap{ width: 300px; height: 30px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between;}
+
+.text_input{ width: 65%; height: 100%; padding-left: 15px; font-size: 14px; border-radius: 10px; border: 3px solid #809000; outline: none;}
+.text_button{ width: 30%; height: 100%; font-size: 15px; border-radius: 10px; border: none; outline: none; color: #fff; background: #809000; cursor: pointer; font-family: 'NanumSquareNeo-Variable';}
+
+@media all and (min-width:768px){
+    .textbox_wrap{ height: 35px;}
+
+    .text_input{ padding-left: 15px; font-size: 14px;}
+    .text_button{font-size: 16px;}
+}
+@media all and (min-width:1024px){
+    .textbox_wrap{ width: 350px; height: 40px;}
+
+    .text_input{ padding-left: 15px; font-size: 16px;}
+    .text_button{ font-size: 17px;}
+}
+@media all and (min-width:1280px){
+    .textbox_wrap{ width: 400px; height: 45px;}
+
+    .text_input{ padding-left: 20px; font-size: 18px;}
+    .text_button{ font-size: 20px;}
+}
+@media all and (min-width:1440px){
+    .textbox_wrap{ width: 450px; height: 50px;}
+
+    .text_input{ padding-left: 25px; font-size: 20px;}
+    .text_button{ font-size: 22px;}
+}
+@media all and (min-width:1680px){
+    .textbox_wrap{ width: 500px; height: 60px;}
+
+    .text_input{ padding-left: 25px; font-size: 22px;}
+    .text_button{ font-size: 24px;}
+}
+
+
+/* 성공, 실패 팝업 */
+.save_wrap{ position: fixed; top: 0; left: 0; right: 0; width: 100%; height: 100%; max-width: 1920px; max-height: 1080px; margin: 0 auto; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; background: rgba(0, 0, 0, 0.7); z-index: 1000;}
+
+.save_img{ width: 100px; max-width: 300px;}
+
+@media all and (min-width:768px){
+    .save_img{ width: 150px;}
+}
+@media all and (min-width:960px){
+    .save_img{ width: 180px;}
+}
+@media all and (min-width:1024px){
+    .save_img{ width: 200px;}
+}
+@media all and (min-width:1280px){
+    .save_img{ width: 220px;}
+}
+@media all and (min-width:1440px){
+    .save_img{ width: 250px;}
+}
+@media all and (min-width:1680px){
+    .save_img{ width: 300px;}    
+}

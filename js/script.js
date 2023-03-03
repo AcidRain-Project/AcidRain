@@ -1,4 +1,4 @@
-var word = ["AppleAppleAppleAppleAppleAppleApple", "Banana", "Cute", "Desgine", "Egg", "Fire", "Great", "Hill", "Ice", "Juice", "Korea", "Libray", "Mom", "Next", "Original", "Pixel", "Question", "Rule", "System", "Teach", "User", "Very", "World", "Xmas", "Youth", "Zoo"];
+var word = ["Apple", "Banana", "Cute", "Desgine", "Egg", "Fire", "Great", "Hill", "Ice", "Juice", "Korea", "Libray", "Mom", "Next", "Original", "Pixel", "Question", "Rule", "System", "Teach", "User", "Very", "World", "Xmas", "Youth", "Zoo"];
 
 var gameArea = document.querySelector(".game_area");
 var newWord = [];
@@ -9,13 +9,15 @@ for(let i = 0; i < wordTop.length; i++){
     wordTop[i] = 0;
 }
 
-// 글자 div 크기를 고정으로 주기 위한 변수
+// div는 100%이기 때문에 글자 div 크기를 고정으로 주기 위한 변수
 const WORDWIDTH = 0;
 const WORDHEIGHT = 0;
 
 // 그려지는 것 보다 내려오는게 간격이 더 짧게 함
 const DRAWTIME = 1500;
-const DOWNTIME = 100;
+
+// 내려오는 속도
+const DOWNTIME = 750;
 
 // 점수
 var score = 0;

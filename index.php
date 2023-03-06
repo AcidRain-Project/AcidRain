@@ -32,7 +32,7 @@ $ContentAcidRainActivityWordList = $Row["ContentAcidRainActivityWordList"];
 
 $ContentAcidRainActivityWord = explode("|", $ContentAcidRainActivityWordList);
 
-echo $ContentAcidRainSuccessScore;
+// echo $ContentAcidRainSuccessScore;
 
 ?>
 <body>

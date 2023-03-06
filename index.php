@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+include_once('../../../includes/dbopen.php');
+?>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -10,7 +13,28 @@
         html, body{ height: 100%;}
     </style>
 </head>
+<?
+$CourseBookContentBankID = isset($_REQUEST["CourseBookContentBankID"]) ? $_REQUEST["CourseBookContentBankID"] : 1;
 
+$Sql = "SELECT * FROM ContentAcidRains where CourseBookContentBankID=:CourseBookContentBankID";
+$Stmt = $DbConn_Box->prepare($Sql);
+$Stmt->bindParam(':CourseBookContentBankID', $CourseBookContentBankID);
+$Stmt->execute();
+$Stmt->setFetchMode(PDO::FETCH_ASSOC);
+$Row = $Stmt->fetch();
+$Stmt = null;
+
+$ContentAcidRainID = $Row["ContentAcidRainID"];
+$ContentAcidRainBgImage = $Row["ContentAcidRainBgImage"];
+$ContentAcidRainSuccessScore = $Row["ContentAcidRainSuccessScore"];
+$ContentAcidRainActivityWordNumbers = $Row["ContentAcidRainActivityWordNumbers"];
+$ContentAcidRainActivityWordList = $Row["ContentAcidRainActivityWordList"];
+
+$ContentAcidRainActivityWord = explode("|", $ContentAcidRainActivityWordList);
+
+// echo $ContentAcidRainSuccessScore;
+
+?>
 <body>
     <!-- 다른 배경이미지로 변경시 main_wrap의 background-images url을 변경 -->
     <div class="main_wrap" style="background-image: url(images/main_bg01.png);">
@@ -21,8 +45,11 @@
                     <div class="view_box">
                         <div class="view_inner">
                             <!-- span class="active" 보기 사라짐 -->
-                            <span>Apple</span>
-                            <span>Banana</span>
+                            
+                            <?for($i=0; $i<$ContentAcidRainActivityWordNumbers; $i++){?>
+                                <span><?=$ContentAcidRainActivityWord[$i];?></span>
+                            <?}?>
+                            <!-- <span>Banana</span>
                             <span>Cute</span>
                             <span>Desgine</span>
                             <span>Egg</span>
@@ -30,7 +57,7 @@
                             <span>Great</span>
                             <span>Hill</span>
                             <span>Ice</span>
-                            <span>Juice</span>
+                            <span>Juice</span> -->
                         </div>
                     </div>
 
@@ -65,6 +92,20 @@
         <img class="save_img fail" src="images/fail.png" style="display: none;">
     </div>
 
-    <script src= "js/script.js"></script>
+<script>
+        ContentAcidRainSuccessScore = '<?=$ContentAcidRainSuccessScore?>';
+        var score = 0;
+        var scoreText = document.querySelector(".score_text");
+        scoreText.innerHTML = "Score : " + score + " / " + ContentAcidRainSuccessScore;
 
+</script>
+    
+
+
+<script src= "js/script.js"></script>
 </body>
+
+
+<?php
+include_once('../../../includes/dbclose.php');
+?>

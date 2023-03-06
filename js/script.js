@@ -20,9 +20,9 @@ const DRAWTIME = 1500;
 const DOWNTIME = 750;
 
 // 점수
-var score = 0;
-var scoreText = document.querySelector(".score_text");
-scoreText.innerHTML = "Score : " + score;
+// var score = 0;
+// var scoreText = document.querySelector(".score_text");
+// scoreText.innerHTML = "Score : " + score;
 
 // word배열의 index 값에 대한 변수
 var idx = 0;
@@ -113,8 +113,8 @@ textInput.addEventListener("keydown", function (e) {
             // 타자 친 단어와 화면의 단어가 일치했을 때
             if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
                 gameArea.removeChild(newWord[i]);
-                score += 5;
-                scoreText.innerHTML = "Score : " + score;
+                score += 1;
+                scoreText.innerHTML = "Score : " + score + " / " + ContentAcidRainSuccessScore;
             }
         }
         // enter 눌렀을 때 input 창 초기화

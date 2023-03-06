@@ -42,15 +42,14 @@ function draw(){
 
    // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 setInteval 메서드
     var drawInterval = setInterval(function(){
-        var leftWidth = Math.round(Math.random() * 100);
-        console.log(leftWidth);
+        var leftWidth = Math.round(Math.random() * 90);
         var wordDiv = document.createElement("div");
         wordDiv.style.width = WORDWIDTH + "px";
         wordDiv.style.height = WORDHEIGHT + "px";
         wordDiv.style.position = "absolute";
         wordDiv.style.textAlign = "center";
-        wordDiv.style.border="1px solid #000";
-        //wordDiv.style.display="inline";
+        // wordDiv.style.border="1px solid #000";
+        // wordDiv.style.display="inline";
 
         // 폰트사이즈
         var sizeChange = gameArea.clientWidth;

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-include_once('../../../includes/dbopen.php');
+include_once('./includes/dbopen.php');
 ?>
 <html>
 <head>
@@ -290,5 +290,5 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
 <?php
 // include_once('./js/script.js');
-include_once('../../../includes/dbclose.php');
+include_once('./includes/dbclose.php');
 ?>

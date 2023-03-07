@@ -7,7 +7,8 @@ include_once('./includes/dbopen.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>산성비 게임2</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <title>산성비 게임</title>
     <link href="css/common.css" rel="stylesheet">
     <style>
         html, body{ height: 100%;}
@@ -117,7 +118,8 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let NowArrAcidRainActivityWord = ArrAcidRainActivityWord.slice(0,9);
     // 다음 단어 배열
     let NextArrAcidRainActivityWord = ArrAcidRainActivityWord.slice(10);
-
+    
+    console.log(ArrAcidRainActivityWord);
     console.log(NowArrAcidRainActivityWord);
     console.log(NextArrAcidRainActivityWord);
 
@@ -141,10 +143,12 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     const DOWNTIME = 750;
 
     // 점수
-    var score = 0;
-    var scoreText = document.querySelector(".score_text");
+    let score = 0;
+    let scoreText = document.querySelector(".score_text");
     scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
-
+    
+    let drawInterval = setInterval(function(){}, DRAWTIME);
+    let downInterval = setInterval(function(){}, DRAWTIME);
     // word배열의 index 값에 대한 변수
     var idx = 0;
 
@@ -154,12 +158,13 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         var temp = null;
 
         // 랜덤으로 word 배열을 섞어주기 위한 for문
-        for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
-            randomWord = Math.round(Math.random() * (ArrAcidRainActivityWord.length - 1));
-            temp = ArrAcidRainActivityWord[randomWord];
-            ArrAcidRainActivityWord[randomWord] = ArrAcidRainActivityWord[i];
-            ArrAcidRainActivityWord[i] = temp;
-        }
+        // for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
+        //     randomWord = Math.round(Math.random() * (ArrAcidRainActivityWord.length - 1));
+        //     temp = ArrAcidRainActivityWord[randomWord];
+        //     ArrAcidRainActivityWord[randomWord] = ArrAcidRainActivityWord[i];
+        //     ArrAcidRainActivityWord[i] = temp;
+        // }
+
 
     // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 setInteval 메서드
         var drawInterval = setInterval(function(){
@@ -184,6 +189,10 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                     wordDiv.style.fontSize = 24 + "px"
                 }
 
+            
+            // 리스트 하나씩 삭제
+            $("#Word_"+idx+"").addClass("active"); 
+                
             wordDiv.innerHTML = ArrAcidRainActivityWord[idx++];
             gameArea.appendChild(wordDiv);
 
@@ -203,7 +212,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                  clearInterval(drawInterval);
             }
 
-            if(score == AcidRainSuccessScore){
+            if(score === AcidRainSuccessScore){
                 console.log('그만');
                 clearInterval(drawInterval);
             }
@@ -215,14 +224,23 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     // 글자를 내려주기 위한 메서드
     function down(){
         // 일정한 간격으로 글자를 내려줌.
-        setInterval(function(){
+        let downInterval = setInterval(function(){
             for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
+                if(NowArrAcidRainActivityWord){
+                }
                 if(i < newWord.length){
                     newWord[i].style.top = wordTop[i] + "px";
+
                     // 글자의 범위가 gameArea 바깥으로 나갔을 경우 제거
                     if(wordTop[i] + WORDHEIGHT >= gameArea.offsetHeight){
                         if(gameArea.contains(newWord[i])) {
                             gameArea.removeChild(newWord[i]);
+                            score -=1 ;
+                            scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+                            if(score == -5){ /*  몇점 실패 논의 필요 */
+                                
+                                gameover();
+                            }
                         }
                     }
                     wordTop[i] += 40;
@@ -232,21 +250,31 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
     }
 
-    //종료 이벤트 추가      
-    function end(){
-        
-        alert('end');
+    function gamewin(){
+        /* sy 성공 이미지 출력 */
+        clearInterval(drawInterval);
+        clearInterval(downInterval);
+        alert('WIN');
+        location.reload();
+    }
+    
+    function gameover(){
+        /* sy 실패 이미지 출력 */
+        clearInterval(drawInterval);
+        clearInterval(downInterval);
+        alert('END');
+        location.reload();
     }
 
     var textInput = document.querySelector(".text_input");
     textInput.addEventListener("keydown", function (e) {
         // enter 눌렀을 때
-        let newWord = newWord.map(v => v.toLowerCase());
+        // let newWord = newWord.map(v => v.toLowerCase());
         if(e.keyCode === 13){
             for(let i = 0; i < newWord.length; i++){
-                
+
                 // 타자 친 단어와 화면의 단어가 일치했을 때
-                if(textInput.value.toLowerCase() === newWord[i].innerHTML){
+                if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
                     console.log('Right');
 
                     gameArea.removeChild(newWord[i]);
@@ -261,10 +289,11 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 // 틀렸을 때
                 }
             }
-           if(newWord.includes(textInput.value.toLowerCase())=== false ){
-                /* sy 틀렸을때 효과 추가  */
-                console.log('Wrong');
-            }
+            console.log(newWord.indexOf(textInput.value.toLowerCase()));
+        //    if(newWord.indexOf(textInput.value.toLowerCase()) === -1 ){
+        //         /* sy 틀렸을때 효과 추가  */
+        //         console.log('Wrong');
+        //     }
             
 
             // enter 눌렀을 때 input 창 초기화

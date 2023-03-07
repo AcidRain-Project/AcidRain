@@ -7,7 +7,7 @@ include_once('./includes/dbopen.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>산성비 게임</title>
+    <title>산성비 게임2</title>
     <link href="css/common.css" rel="stylesheet">
     <style>
         html, body{ height: 100%;}

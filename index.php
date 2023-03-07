@@ -109,6 +109,8 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     AcidRainActivityWord = AcidRainActivityWord.replaceAll("\"","");
     AcidRainActivityWord = AcidRainActivityWord.replaceAll("[","");
     AcidRainActivityWord = AcidRainActivityWord.replaceAll("]","");
+
+    // 총 단어 배열 
     let ArrAcidRainActivityWord = (AcidRainActivityWord.split(','));
     
     //  현대 단어 10개
@@ -133,7 +135,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     const WORDHEIGHT = 0;
 
     // 그려지는 것 보다 내려오는게 간격이 더 짧게 함
-    const DRAWTIME = 1500;
+    const DRAWTIME = 1500; // 3000이 적당해 보임
 
     // 내려오는 속도
     const DOWNTIME = 750;
@@ -198,8 +200,14 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
             // 글자가 다 뿌려지면 setInterval() 중지
             if(newWord.length === ArrAcidRainActivityWord.length){
+                 clearInterval(drawInterval);
+            }
+
+            if(score == AcidRainSuccessScore){
+                console.log('그만');
                 clearInterval(drawInterval);
             }
+            
         }, DRAWTIME);
     }
 
@@ -224,24 +232,41 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
     }
 
+    //종료 이벤트 추가      
+    function end(){
+        
+        alert('end');
+    }
+
     var textInput = document.querySelector(".text_input");
     textInput.addEventListener("keydown", function (e) {
         // enter 눌렀을 때
+        let newWord = newWord.map(v => v.toLowerCase());
         if(e.keyCode === 13){
             for(let i = 0; i < newWord.length; i++){
+                
                 // 타자 친 단어와 화면의 단어가 일치했을 때
-                if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
+                if(textInput.value.toLowerCase() === newWord[i].innerHTML){
+                    console.log('Right');
+
                     gameArea.removeChild(newWord[i]);
                     score += 1;
                     scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
-
+                    // 끝났을 때
                     if(score == AcidRainSuccessScore){
-                        /*이미지 나오게 해주세요
-                        종료 이벤트 추가
-                        */
+                        /* sy 종료 이미지 추가*/
+                        console.log('END');
                     }
+
+                // 틀렸을 때
                 }
             }
+           if(newWord.includes(textInput.value.toLowerCase())=== false ){
+                /* sy 틀렸을때 효과 추가  */
+                console.log('Wrong');
+            }
+            
+
             // enter 눌렀을 때 input 창 초기화
             textInput.value = "";
         }
@@ -253,6 +278,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     // 게임시작 버튼
     var textButton = document.querySelector(".text_button");
     textButton.addEventListener("click", function(){
+        console.log('go');
         if (count === 0){
             draw();
             down();
@@ -263,6 +289,6 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 </script>
 
 <?php
-include_once('./js/script.php');
+// include_once('./js/script.js');
 include_once('../../../includes/dbclose.php');
 ?>

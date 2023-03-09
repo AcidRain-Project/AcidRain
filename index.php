@@ -91,10 +91,11 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-    <!-- 성공, 실패 팝업 -->
+    <!-- 성공, 실패, 다음단계 팝업 -->
     <div class="save_wrap" style="display: none;">
-        <img class="save_img pass" src="images/pass.png" style="display: ;">
+        <img class="save_img pass" src="images/pass.png" style="display: none;">
         <img class="save_img fail" src="images/fail.png" style="display: none;">
+        <img class="save_img next" src="images/next.png" style="display: ;">
     </div>
 
 

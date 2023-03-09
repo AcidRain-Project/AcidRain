@@ -96,6 +96,14 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 .game_wrap{ position: relative; width: 100%; height: 100%;}
 .game_area{ position: absolute; top: 70px; left: 1%; width: 98%; height: 66%;}
 
+/* 단어를 잘 못 입력했을 때 효과 */
+.vibration{ animation: vibration 0.15s 5;}
+
+@keyframes vibration {
+    from{transform: rotate(1deg);}
+    to{transform: rotate(-1deg);}
+}
+
 @media all and (min-width:768px){
     .game_area{ top: 85px; height: 64%;}
 }
@@ -158,7 +166,7 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 }
 
 
-/* 성공, 실패 팝업 */
+/* 성공, 실패, 다음단계 팝업 */
 .save_wrap{ position: fixed; top: 0; left: 0; right: 0; width: 100%; height: 100%; max-width: 1920px; max-height: 1080px; margin: 0 auto; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; background: rgba(0, 0, 0, 0.7); z-index: 1000;}
 
 .save_img{ width: 100px; max-width: 300px;}

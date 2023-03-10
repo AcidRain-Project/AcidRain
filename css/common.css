@@ -171,7 +171,7 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 
 .save_area{ width: 40%;}
 .save_img{ display: flex; justify-content: center; width: 100%; margin-bottom: 20px;}
-.pass_img, .fail_img{ width: 100px; max-width: 300px;}
+.save_img_class{ width: 100px; max-width: 300px;}
 
 .save_btns{ display: flex; justify-content: space-between; align-items: center;}
 .save_btns button{ width: 45%; height: 35px; font-size: 13px; border-radius: 10px; border: none; outline: none; color: #111; background: #fff; border: 3px solid #163851; cursor: pointer; font-family: 'NanumSquareNeo-Variable'; transition: all 0.2s;}
@@ -180,29 +180,29 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 
 @media all and (min-width:768px){
     .save_area{ width: 35%;}
-    .pass_img, .fail_img{ width: 150px;}
+    .save_img_class{ width: 150px;}
     .save_btns button{ height: 40px; font-size: 13px;}
 }
 @media all and (min-width:960px){
-    .pass_img, .fail_img{ width: 180px;}
+    .save_img_class{ width: 180px;}
     .save_btns button{ height: 45px; font-size: 17px;}
 }
 @media all and (min-width:1024px){
-    .pass_img, .fail_img{ width: 200px;}
+    .save_img_class{ width: 200px;}
     .save_btns button{ height: 50px;}
 }
 @media all and (min-width:1280px){
     .save_img{ margin-bottom: 30px;}
-    .pass_img, .fail_img{ width: 220px;}
+    .save_img_class{ width: 220px;}
     .save_btns button{ height: 55px; font-size: 20px;}
 }
 @media all and (min-width:1440px){
     .save_img{ margin-bottom: 40px;}
-    .pass_img, .fail_img{ width: 250px;}
+    .save_img_class{ width: 250px;}
     .save_btns button{ height: 60px; font-size: 22px;}
 }
 @media all and (min-width:1680px){
     .save_img{ margin-bottom: 50px;}
-    .pass_img, .fail_img{ width: 300px;}
+    .save_img_class{ width: 300px;}
     .save_btns button{ height: 65px;}
 }

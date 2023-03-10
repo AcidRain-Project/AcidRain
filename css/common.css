@@ -171,7 +171,7 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 
 .save_area{ width: 40%;}
 .save_img{ width: 100%; margin-bottom: 20px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center;}
-.save_img_class{ width: 100px;}
+.save_img_class{ width: 100px; max-width: 300px;}
 
 .save_btns{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between;}
 .save_btns button{ width: 45%; height: 35px; font-size: 13px; border-radius: 10px; border: none; outline: none; color: #111; background: #fff; border: 3px solid #163851; cursor: pointer; font-family: 'NanumSquareNeo-Variable'; transition: all 0.2s;}

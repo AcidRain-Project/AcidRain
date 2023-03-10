@@ -76,21 +76,21 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 <div class="textbox">
                     <div class="textbox_wrap">
                         <input class="text_input" type="text">
-                        <button class="text_button">게시작11</button>
+                        <button class="text_button">게임시작</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-      <!-- 성공, 실패, 다음단계 팝업 -->
+    <!-- 성공, 실패, 다음단계 팝업 -->
     <!-- <div class="save_area" style="display: none;">
         <img class="save_img" src="" style="display: ;">
     </div> -->
     <div class="save_wrap" style="display: none;">
         <div class="save_area">
             <div class="save_img">
-                <img src="images/fail.png" class="save_img_class" style="width: 100px; display: ;">
+                <img src="images/fail.png" class="save_img_class" style="display: ;">
             </div>
             <div class="save_btns">
                 <button>Retry</button>
@@ -157,7 +157,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     // 그려지는 것 보다 내려오는게 간격이 더 짧게 함
     const DRAWTIME = 1500; // 3000이 적당해 보임
     // 내려오는 속도
-    const DOWNTIME = 50;
+    const DOWNTIME = 750;
 
     // 제한 시간
     const STOPTIME = 30000; // 30초

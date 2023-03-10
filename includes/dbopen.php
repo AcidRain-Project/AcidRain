@@ -4,11 +4,10 @@ $http_host = $_SERVER['HTTP_HOST'];
 
 
 $DbHost = "localhost";
-$DbName = "lnc_learningbox_dev";
-$DbUser = "websitesuper";
-$DbPass = "websitesuper!@2019";
+$DbName = "sun";
+$DbUser = "root";
+$DbPass = "dlWkd364#$0081";
 
-$DbLinkSiteMode = "dev";
 
 
 

@@ -42,7 +42,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 ?>
 <body>
     <!-- 다른 배경이미지로 변경시 main_wrap의 background-images url을 변경 -->
-    <div class="main_wrap" style="background-image: url(images/main_bg01.png);">
+    <div class="main_wrap" style="background-image: url(images/<?=$ContentAcidRainBgImage?>);">
         <div class="main_bg" style="background-image: url(images/main_bg_1080.png);">
 
             <div class="header_wrap" style="display: ;">
@@ -83,18 +83,18 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-    <!-- 성공, 실패, 다음단계 팝업 -->
+      <!-- 성공, 실패, 다음단계 팝업 -->
     <!-- <div class="save_area" style="display: none;">
         <img class="save_img" src="" style="display: ;">
     </div> -->
     <div class="save_wrap" style="display: none;">
         <div class="save_area">
             <div class="save_img">
-                <img class="save_img_class" src="" style="display: ;">
+                <img class="save_img_class" src="" style="display: ">
             </div>
             <div class="save_btns">
-                <button>Retry</button>
-                <button>Next</button>
+                <button id="retry_btn">Retry</button>
+                <button id="next_btn">Next</button>
             </div>
         </div>
     </div>
@@ -140,6 +140,10 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let save_wrap = document.querySelector('.save_wrap'); // 이미지 
     let save_img = document.querySelector('.save_img_class'); // 끝났을때 이미지
     let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
+
+    let retry_btn = document.querySelector("#retry_btn"); // 단어 내려오는 배경
+    let next_btn = document.querySelector("#next_btn"); // 단어 내려오는 배경
+    
     
     
     let newWord = [];
@@ -155,12 +159,12 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     const WORDHEIGHT = 0;
 
     // 그려지는 것 보다 내려오는게 간격이 더 짧게 함
-    const DRAWTIME = 1500; // 3000이 적당해 보임
+    const DRAWTIME = 1500; 
     // 내려오는 속도
     const DOWNTIME = 750;
 
     // 제한 시간
-    const STOPTIME = 30000; // 30초
+    const STOPTIME = 40000; 
 
     // 점수
     const FAILSCORE = -2;
@@ -334,19 +338,17 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         }
     }// start
 
-    
-    
-
-    function nextStep (){
-        alert('next');
+    retry_btn.addEventListener("click",function(e){
+        save_wrap.style = "display:none;"
         location.reload();
-    }
+    });
 
-    function Replay(){
-        location.reload();
-    }
-
-
+    next_btn.addEventListener("click",function(e){
+        save_wrap.style = "display:none;"
+        alert('다음페이지로');
+        location.href('./acid_rain_form.php');
+    });
+    
     function resultSave(){
 
     }

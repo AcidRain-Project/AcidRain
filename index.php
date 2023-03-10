@@ -83,11 +83,14 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-    <!-- 성공, 실패 팝업 -->
-    <div class="save_wrap" style="display: ;">
+      <!-- 성공, 실패, 다음단계 팝업 -->
+    <!-- <div class="save_area" style="display: none;">
+        <img class="save_img" src="" style="display: ;">
+    </div> -->
+    <div class="save_wrap" style="display: none;">
         <div class="save_area">
             <div class="save_img">
-                <img class="pass_img" src="images/pass.png" style="display: ">
+                <img class="save_img_class" src="" style="display: ">
             </div>
             <div class="save_btns">
                 <button>Retry</button>
@@ -134,8 +137,8 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     
     
     let view_inner = document.querySelector('.view_inner'); // 상단 단어 리스트 
-    let save_area = document.querySelector('.save_area'); // 끝났을때 이미지
-    let save_img = document.querySelector('.save_img'); // 끝났을때 이미지
+    let save_wrap = document.querySelector('.save_wrap'); // 이미지 
+    let save_img = document.querySelector('.save_img_class'); // 끝났을때 이미지
     let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
     
     
@@ -321,7 +324,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             clearInterval(drawInterval);
             clearInterval(downInterval);
             clearTimeout(timeout)
-            save_area.style = "display:";
+            save_wrap.style = "display:";
 
             if(resultNum === 2){ // 실패
                 save_img.src = "images/fail.png";

@@ -89,7 +89,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     </div> -->
     <div class="save_wrap" style="display: none;">
         <div class="save_area">
-            <div class="save_img">
+            <div class="save_imgs">
                 <img class="save_img_class" src="" style="display: ;">
             </div>
             <div class="save_btns">

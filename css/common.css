@@ -166,26 +166,43 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 }
 
 
-/* 성공, 실패, 다음단계 팝업 */
+/* 성공, 실패 팝업 */
 .save_wrap{ position: fixed; top: 0; left: 0; right: 0; width: 100%; height: 100%; max-width: 1920px; max-height: 1080px; margin: 0 auto; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; background: rgba(0, 0, 0, 0.7); z-index: 1000;}
 
-.save_img{ width: 100px; max-width: 300px;}
+.save_area{ width: 40%;}
+.save_img{ display: flex; justify-content: center; width: 100%; margin-bottom: 20px;}
+.pass_img, .fail_img{ width: 100px; max-width: 300px;}
+
+.save_btns{ display: flex; justify-content: space-between; align-items: center;}
+.save_btns button{ width: 45%; height: 35px; font-size: 13px; border-radius: 10px; border: none; outline: none; color: #111; background: #fff; border: 3px solid #163851; cursor: pointer; font-family: 'NanumSquareNeo-Variable'; transition: all 0.2s;}
+.save_btns button:hover{ color: #fff; background: #163851;} 
+.save_btns button.active{ color: #fff; background: #163851;} 
 
 @media all and (min-width:768px){
-    .save_img{ width: 150px;}
+    .save_area{ width: 35%;}
+    .pass_img, .fail_img{ width: 150px;}
+    .save_btns button{ height: 40px; font-size: 13px;}
 }
 @media all and (min-width:960px){
-    .save_img{ width: 180px;}
+    .pass_img, .fail_img{ width: 180px;}
+    .save_btns button{ height: 45px; font-size: 17px;}
 }
 @media all and (min-width:1024px){
-    .save_img{ width: 200px;}
+    .pass_img, .fail_img{ width: 200px;}
+    .save_btns button{ height: 50px;}
 }
 @media all and (min-width:1280px){
-    .save_img{ width: 220px;}
+    .save_img{ margin-bottom: 30px;}
+    .pass_img, .fail_img{ width: 220px;}
+    .save_btns button{ height: 55px; font-size: 20px;}
 }
 @media all and (min-width:1440px){
-    .save_img{ width: 250px;}
+    .save_img{ margin-bottom: 40px;}
+    .pass_img, .fail_img{ width: 250px;}
+    .save_btns button{ height: 60px; font-size: 22px;}
 }
 @media all and (min-width:1680px){
-    .save_img{ width: 300px;}    
+    .save_img{ margin-bottom: 50px;}
+    .pass_img, .fail_img{ width: 300px;}
+    .save_btns button{ height: 65px;}
 }

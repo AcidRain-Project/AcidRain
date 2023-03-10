@@ -83,13 +83,28 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-      <!-- 성공, 실패, 다음단계 팝업 -->
+    <!-- 성공, 실패 팝업 -->
     <div class="save_wrap" style="display: none;">
-        <img class="save_img" src="images/pass.png" style="display: ;">
-        <!-- <img class="save_img fail" src="images/fail.png" style="display: ;"> -->
-        <img class="save_img next" src="images/next.png" style="display: ;">
-    </div>
+        <div class="save_area" style="display: ;">
+            <div class="save_img pass">
+                <img class="pass_img" src="images/pass.png">
+            </div>
+            <div class="save_btns">
+                <button>Retry</button>
+                <button>Next</button>
+            </div>
+        </div>
 
+        <div class="save_area" style="display: none;">
+            <div class="save_img fail">
+                <img class="fail_img" src="images/fail.png">
+            </div>
+            <div class="save_btns">
+                <button>Retry</button>
+                <button>Next</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 

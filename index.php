@@ -50,19 +50,11 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                     <div class="view_box">
                         <div class="view_inner">
                             <!-- span class="active" 보기 사라짐 -->
+                            <!-- <span name="word_list"></span> -->
                             <?for($i=0; $i<10; $i++){?>
-                                <span id=Word_<?=$i?>><?=$ContentAcidRainActivityWord[$i];?></span>
+                                <span id=word_<?=$i?>><?=$ContentAcidRainActivityWord[$i];?></span>
                             <?}?>
-              
-                            <!-- <span>Banana</span>
-                            <span>Cute</span>
-                            <span>Desgine</span>
-                            <span>Egg</span>
-                            <span>Fire</span>
-                            <span>Great</span>
-                            <span>Hill</span>
-                            <span>Ice</span>
-                            <span>Juice</span> -->
+       
                         </div>
                     </div>
 
@@ -93,15 +85,37 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
     <!-- 성공, 실패, 다음단계 팝업 -->
     <div class="save_wrap" style="display: none;">
-        <img class="save_img pass" src="images/pass.png" style="display: none;">
-        <img class="save_img fail" src="images/fail.png" style="display: none;">
-        <img class="save_img next" src="images/next.png" style="display: ;">
+        <img class="save_img" src="images/pass.png" style="display: ;">
+        <!-- <img class="save_img fail" src="images/fail.png" style="display: ;"> -->
+
     </div>
 
 
 </body>
 
 <script>
+    $(document).ready(function(){
+        // for(let word of NowArrAcidRainActivityWord){
+        //     console.log(word);
+        //     for(let i=0; i<NowArrAcidRainActivityWord.length; i++){
+        //         view_wordSpan.innerHTML = word;
+        //         view_inner.appendChild(view_wordSpan);
+        //     }
+            
+        // }
+        
+        // for(let i=0; i<NowArrAcidRainActivityWord.length; i++){
+        //     let word = NowArrAcidRainActivityWord[i];
+        //     console.log(word);
+        //     view_wordSpan.id= "word_"+i
+        //     view_wordSpan.innerHTML = word;
+        //     view_inner.appendChild(view_wordSpan);
+
+        // }
+        
+        // document.querySelector('.word_list').appendChild();
+    });
+    
     let AcidRainBgImage = '<?=$ContentAcidRainBgImage?>';
     let AcidRainSuccessScore = <?=$ContentAcidRainSuccessScore?>;
     let AcidRainActivityWordNumbers = <?=$ContentAcidRainActivityWordNumbers?>;
@@ -119,16 +133,19 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let NowArrAcidRainActivityWord = ArrAcidRainActivityWord.slice(0,9);
     // 다음 단어 배열
     let NextArrAcidRainActivityWord = ArrAcidRainActivityWord.slice(10);
-    
     console.log(ArrAcidRainActivityWord);
     console.log(NowArrAcidRainActivityWord);
     console.log(NextArrAcidRainActivityWord);
-
-    var gameArea = document.querySelector(".game_area");
-    var newWord = [];
+    
+    
+    let view_inner = document.querySelector('.view_inner'); // 상단 단어 리스트 
+    let save_wrap = document.querySelector('.save_wrap'); // 끝났을때 이미지
+    let save_img = document.querySelector('.save_img'); // 끝났을때 이미지
+    let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
+    let newWord = [];
 
     // word의 각 글자마다 top을 주기위한 배열 초기화
-    var wordTop = new Array(ArrAcidRainActivityWord.length);
+    let wordTop = new Array(ArrAcidRainActivityWord.length);
     for(let i = 0; i < wordTop.length; i++){
         wordTop[i] = 0;
     }
@@ -148,159 +165,174 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let scoreText = document.querySelector(".score_text");
     scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
     
-    let drawInterval = setInterval(function(){}, DRAWTIME);
-    let downInterval = setInterval(function(){}, DRAWTIME);
     // word배열의 index 값에 대한 변수
-    var idx = 0;
+    function start(){
+        let drawInterval = setInterval(function(){}, DRAWTIME);
+        let downInterval = setInterval(function(){}, DRAWTIME);
 
-    // 화면에 글자를 뿌려주기 위한 메서드
-    function draw(){
-        var randomWord = 0;
-        var temp = null;
+        let idx = 0;
+        // 화면에 글자를 뿌려주기 위한 메서드
+        function draw(){
+            var randomWord = 0;
+            var temp = null;
+            
+            // 랜덤으로 word 배열을 섞어주기 위한 for문
+            // for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
+                //     randomWord = Math.round(Math.random() * (ArrAcidRainActivityWord.length - 1));
+                //     temp = ArrAcidRainActivityWord[randomWord];
+                //     ArrAcidRainActivityWord[randomWord] = ArrAcidRainActivityWord[i];
+                //     ArrAcidRainActivityWord[i] = temp;
+                // }
+                
+                
+                // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 setInteval 메서드
+                let drawInterval = setInterval(function(){
+                
+                var leftWidth = Math.round(Math.random() * 90);
+                var wordDiv = document.createElement("div");
+                wordDiv.style.width = WORDWIDTH + "px";
+                wordDiv.style.height = WORDHEIGHT + "px";
+                wordDiv.style.position = "absolute";
+                wordDiv.style.textAlign = "center";
+                // wordDiv.style.border="1px solid #000";
+                // wordDiv.style.display="inline";
 
-        // 랜덤으로 word 배열을 섞어주기 위한 for문
-        // for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
-        //     randomWord = Math.round(Math.random() * (ArrAcidRainActivityWord.length - 1));
-        //     temp = ArrAcidRainActivityWord[randomWord];
-        //     ArrAcidRainActivityWord[randomWord] = ArrAcidRainActivityWord[i];
-        //     ArrAcidRainActivityWord[i] = temp;
-        // }
+                // 폰트사이즈
+                var sizeChange = gameArea.clientWidth;
+                    if(sizeChange <= 938){
+                        wordDiv.style.fontSize = 14 + "px"
+                    }else if(sizeChange >= 939 && sizeChange <= 1249){
+                        wordDiv.style.fontSize = 18 + "px"
+                    }else if(sizeChange >= 1250 && sizeChange <= 1640){
+                        wordDiv.style.fontSize = 22 + "px"
+                    }else{
+                        wordDiv.style.fontSize = 24 + "px"
+                    }
+
+                
+                // 리스트 하나씩 삭제
+                $("#word_"+idx+"").addClass("active");
+                
+                
+                // 다음 리스트 추가 
+                if(NextArrAcidRainActivityWord[idx] !== undefined){
+                    let view_wordSpan = document.createElement('span');
+                    let next_idx = 10+idx;
+                    view_wordSpan.setAttribute('id', 'word_'+next_idx)
+                    view_wordSpan.innerHTML= NextArrAcidRainActivityWord[idx];
+                    view_inner.appendChild(view_wordSpan);
+                }
+                
+                //단어 비 내림
+                
+                wordDiv.innerHTML = ArrAcidRainActivityWord[idx++];
+                gameArea.appendChild(wordDiv);
+                
+                
+                
 
 
-    // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 setInteval 메서드
-        var drawInterval = setInterval(function(){
-            var leftWidth = Math.round(Math.random() * 90);
-            var wordDiv = document.createElement("div");
-            wordDiv.style.width = WORDWIDTH + "px";
-            wordDiv.style.height = WORDHEIGHT + "px";
-            wordDiv.style.position = "absolute";
-            wordDiv.style.textAlign = "center";
-            // wordDiv.style.border="1px solid #000";
-            // wordDiv.style.display="inline";
-
-            // 폰트사이즈
-            var sizeChange = gameArea.clientWidth;
-                if(sizeChange <= 938){
-                    wordDiv.style.fontSize = 14 + "px"
-                }else if(sizeChange >= 939 && sizeChange <= 1249){
-                    wordDiv.style.fontSize = 18 + "px"
-                }else if(sizeChange >= 1250 && sizeChange <= 1640){
-                    wordDiv.style.fontSize = 22 + "px"
+                // 글자 width 값 까지 더하게 되면 gameArea의 범위를 넘어갈 수 있기때문에 안넘어가게 하기 위한 재설정
+        
+                if(leftWidth + WORDWIDTH >= gameArea.clientWidth){
+                    wordDiv.style.left = (leftWidth - WORDWIDTH) + "%";
                 }else{
-                    wordDiv.style.fontSize = 24 + "px"
+                    wordDiv.style.left = leftWidth + "%";
                 }
 
-            
-            // 리스트 하나씩 삭제
-            $("#Word_"+idx+"").addClass("active"); 
+                newWord.push(wordDiv);
+
+                // 글자가 다 뿌려지면 setInterval() 중지
+                if(newWord.length === ArrAcidRainActivityWord.length){
+                    clearInterval(drawInterval)
+                }
+            }, DRAWTIME);
+        }
+
+        function down(){
+            // 일정한 간격으로 글자를 내려줌.
+            let downInterval = setInterval(function(){
+                for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
+                    console.log(i , ArrAcidRainActivityWord.length);
+        
+                    if(i < newWord.length){
+                        newWord[i].style.top = wordTop[i] + "px";
+        
+                        // 글자의 범위가 gameArea 바깥으로 나갔을 경우 제거
+                        if(wordTop[i] + WORDHEIGHT >= gameArea.offsetHeight){
+                            if(gameArea.contains(newWord[i])) {
+                                gameArea.removeChild(newWord[i]);
+                                
+                                score -=1 ;
+                                scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+                                if(gameArea.contains(newWord[i])==false && i == ArrAcidRainActivityWord.length){
+                                    console.log('222222222222');
+                                    gameover(drawInterval,downInterval);
+                                }
+
+                                if(score == -2){ /*  몇점 실패 논의 필요 */    
+                                    gameover(drawInterval,downInterval);
+                                }
+                            }
+                        }
+                        wordTop[i] += 40;
+                    }
+                }
+            }, DOWNTIME);
+        }// down
+
+        draw();
+        down();
+
+        var textInput = document.querySelector(".text_input");
+        textInput.addEventListener("keydown", function (e) {
+            // enter 눌렀을 때
+            let DivisionNum = 0;
+            if(e.keyCode === 13){
+                for(let i = 0; i < newWord.length; i++){
+                    // 타자 친 단어와 화면의 단어가 일치했을 때
+                    if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
+                        console.log('Right');
+                        gameArea.removeChild(newWord[i]);
+                        score += 1;
+                        scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+
+                        // 끝났을 때
+                        if(score == AcidRainSuccessScore){
+                            gamewin(drawInterval,downInterval);
+                        }
+                        DivisionNum = 1;
+                    } 
+                }    
+                    // 틀렸을 때
+                if(DivisionNum == 0){
+                    /* sy 틀렸을때 효과 추가  */
+                    console.log('Wrong');
+                }
                 
-            wordDiv.innerHTML = ArrAcidRainActivityWord[idx++];
-            gameArea.appendChild(wordDiv);
-
-
-            // 글자 width 값 까지 더하게 되면 gameArea의 범위를 넘어갈 수 있기때문에 안넘어가게 하기 위한 재설정
-    
-            if(leftWidth + WORDWIDTH >= gameArea.clientWidth){
-                wordDiv.style.left = (leftWidth - WORDWIDTH) + "%";
-            }else{
-                wordDiv.style.left = leftWidth + "%";
+                textInput.value = "";
             }
-
-            newWord.push(wordDiv);
-
-            // 글자가 다 뿌려지면 setInterval() 중지
-            if(newWord.length === ArrAcidRainActivityWord.length){
-                 clearInterval(drawInterval);
-            }
-
-            if(score === AcidRainSuccessScore){
-                console.log('그만');
-                clearInterval(drawInterval);
-            }
-            
-        }, DRAWTIME);
-    }
+        }); //addEventListener
+    }// start
 
 
     // 글자를 내려주기 위한 메서드
-    function down(){
-        // 일정한 간격으로 글자를 내려줌.
-        let downInterval = setInterval(function(){
-            for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
-                if(NowArrAcidRainActivityWord){
-                }
-                if(i < newWord.length){
-                    newWord[i].style.top = wordTop[i] + "px";
 
-                    // 글자의 범위가 gameArea 바깥으로 나갔을 경우 제거
-                    if(wordTop[i] + WORDHEIGHT >= gameArea.offsetHeight){
-                        if(gameArea.contains(newWord[i])) {
-                            gameArea.removeChild(newWord[i]);
-                            score -=1 ;
-                            scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
-                            if(score == -5){ /*  몇점 실패 논의 필요 */
-                                
-                                gameover();
-                            }
-                        }
-                    }
-                    wordTop[i] += 40;
-                }
-            }
-        }, DOWNTIME);
-
-    }
-
-    function gamewin(){
-        /* sy 성공 이미지 출력 */
+    function gamewin(drawInterval,downInterval){
         clearInterval(drawInterval);
         clearInterval(downInterval);
-        alert('WIN');
-        location.reload();
+        save_wrap.style = "display:";
+        
     }
     
-    function gameover(){
-        /* sy 실패 이미지 출력 */
+    function gameover(drawInterval,downInterval){
         clearInterval(drawInterval);
         clearInterval(downInterval);
-        alert('END');
-        location.reload();
+        save_wrap.style = "display:";
+        save_img.src = "images/fail.png";
     }
 
-    var textInput = document.querySelector(".text_input");
-    textInput.addEventListener("keydown", function (e) {
-        // enter 눌렀을 때
-        // let newWord = newWord.map(v => v.toLowerCase());
-        if(e.keyCode === 13){
-            for(let i = 0; i < newWord.length; i++){
 
-                // 타자 친 단어와 화면의 단어가 일치했을 때
-                if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
-                    console.log('Right');
-
-                    gameArea.removeChild(newWord[i]);
-                    score += 1;
-                    scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
-                    // 끝났을 때
-                    if(score == AcidRainSuccessScore){
-                        /* sy 종료 이미지 추가*/
-                        console.log('END');
-                    }
-
-                // 틀렸을 때
-                }
-            }
-            console.log(newWord.indexOf(textInput.value.toLowerCase()));
-        //    if(newWord.indexOf(textInput.value.toLowerCase()) === -1 ){
-        //         /* sy 틀렸을때 효과 추가  */
-        //         console.log('Wrong');
-        //     }
-            
-
-            // enter 눌렀을 때 input 창 초기화
-            textInput.value = "";
-        }
-    });
 
     // 클릭 횟수에 대한 변수
     var count = 0;
@@ -310,8 +342,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     textButton.addEventListener("click", function(){
         console.log('go');
         if (count === 0){
-            draw();
-            down();
+            start();
         }
         count++;
     });

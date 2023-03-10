@@ -1,5 +1,5 @@
 <?php
-include_once('../../../includes/dbopen.php');
+include_once('./includes/dbopen.php');
 //include_once('../../../includes/common.php');
 //include_once('./../../inc_header.php');
 ?>
@@ -135,5 +135,5 @@ function FormClose(){
 
 <?php
 //include_once('./../../inc_footer.php');
-include_once('../../../includes/dbclose.php');
+include_once('./includes/dbclose.php');
 ?>

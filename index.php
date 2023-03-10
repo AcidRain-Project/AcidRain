@@ -83,28 +83,20 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-    <!-- 성공, 실패 팝업 -->
-    <div class="save_wrap" style="display: none;">
-        <div class="save_area" style="display: ;">
-            <div class="save_img pass">
-                <img class="pass_img" src="images/pass.png">
-            </div>
-            <div class="save_btns">
-                <button>Retry</button>
-                <button>Next</button>
-            </div>
-        </div>
+      <!-- 성공, 실패, 다음단계 팝업 -->
+    <!-- <div class="save_area" style="display: none;">
+        <img class="save_img" src="" style="display: ;">
+    </div> -->
 
-        <div class="save_area" style="display: none;">
-            <div class="save_img fail">
-                <img class="fail_img" src="images/fail.png">
-            </div>
-            <div class="save_btns">
-                <button>Retry</button>
-                <button>Next</button>
-            </div>
+    <div class="save_area" style="display: ;">
+        <img class="save_img" src="images/pass.png">
+        <div class="save_btns">
+            <button id="retry_btn">Retry</button>
+            <button id="next_btn">Next</button>
         </div>
     </div>
+
+    
 
 </body>
 
@@ -112,11 +104,12 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     $(document).ready(function(){
 
     });
-    /*  스코어 논의 필요
+    /*  시간,스코어 논의 필요
         맞춰야 되는 스코어 DB
         바다에 빠지면 -1
         맞추면 + 1 
         맞추지 못하면 0
+        
     */
     let AcidRainBgImage = '<?=$ContentAcidRainBgImage?>';
     let AcidRainSuccessScore = <?=$ContentAcidRainSuccessScore?>;
@@ -141,7 +134,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     
     
     let view_inner = document.querySelector('.view_inner'); // 상단 단어 리스트 
-    let save_wrap = document.querySelector('.save_wrap'); // 끝났을때 이미지
+    let save_area = document.querySelector('.save_area'); // 끝났을때 이미지
     let save_img = document.querySelector('.save_img'); // 끝났을때 이미지
     let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
     
@@ -160,11 +153,14 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
     // 그려지는 것 보다 내려오는게 간격이 더 짧게 함
     const DRAWTIME = 1500; // 3000이 적당해 보임
-
     // 내려오는 속도
     const DOWNTIME = 750;
 
+    // 제한 시간
+    const STOPTIME = 30000; // 30초
+
     // 점수
+    const FAILSCORE = -2;
     let score = 0;
     let bar_score = 0;
 
@@ -189,7 +185,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         } */
             
         
-        // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 setInteval 메서드
+        // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 메서드
         let drawInterval = setInterval(function(){
             
             var leftWidth = Math.round(Math.random() * 90);
@@ -228,7 +224,6 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             }
             
             //단어 비 내림
-            
             wordDiv.innerHTML = ArrAcidRainActivityWord[idx++];
             gameArea.appendChild(wordDiv);
 
@@ -251,28 +246,28 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         // 일정한 간격으로 글자를 내려줌.
         let downInterval = setInterval(function(){
             for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
+                
                 if(i < newWord.length){
                     newWord[i].style.top = wordTop[i] + "px";
-    
+                    
                     // 글자의 범위가 gameArea 바깥으로 나갔을 경우 제거
                     if(wordTop[i] + WORDHEIGHT >= gameArea.offsetHeight){
                         if(gameArea.contains(newWord[i])) {
-
+                            
                             gameArea.removeChild(newWord[i]);
-                            // score -=1 ;
-                            (bar_score >= 0) ? 0 :
-                            bar_score -= 10;
+                            score -=1 ;
+                            if(score <= -1){
+                                bar_score = 0; 
+                            }else{
+                                bar_score -= 10;
+                            } 
+                            
                             scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
                             score_bar.style = "width: calc(100% - "+bar_score+"%);";
 
-                            if(gameArea.length === 0 && i === newWord.length){
-                                console.log('222222222222');
-                                gameover(drawInterval,downInterval);
-                            }
-
                             // 정한 갯수만큼 실패 
-                            if(score == -2){     
-                                gameover(drawInterval,downInterval);
+                            if(score == FAILSCORE){     
+                                gameEnd(drawInterval,downInterval,2);
                             }
                         }
                     }
@@ -280,7 +275,9 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 }
             }
         }, DOWNTIME);
-       
+        
+
+    
 
         var textInput = document.querySelector(".text_input");
         textInput.addEventListener("keydown", function (e) {
@@ -292,20 +289,20 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                     // 타자 친 단어와 화면의 단어가 일치했을 때
                     if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
                         gameArea.removeChild(newWord[i]);
-
+                        console.log('Right');
                         score += 1;
                         bar_score += 10;
                         scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
                         score_bar.style = "width: calc(100% - "+bar_score+"%);";
 
-                        // 끝났을 때
                         if(score == AcidRainSuccessScore){
-                            gamewin(drawInterval,downInterval);
+                            gameEnd(drawInterval,downInterval,1);
                         }
                         DivisionNum = 1;
                     } 
                 }    
-                    // 틀렸을 때
+
+                // 틀렸을 때
                 if(DivisionNum == 0){
                     /* sy 틀렸을때 효과 추가  */
                     console.log('Wrong');
@@ -315,29 +312,44 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             }
         }); //addEventListener
 
-        function gamewin(drawInterval,downInterval){
+        // 30초 지났을때 실패 
+        let timeout = setTimeout(() => {
+            gameEnd(drawInterval,downInterval,2,timeout);
+        }, STOPTIME);
+
+        function gameEnd(drawInterval,downInterval,resultNum){
             clearInterval(drawInterval);
             clearInterval(downInterval);
-            save_wrap.style = "display:";
-        }
-        
-        function gameover(drawInterval,downInterval){
-            clearInterval(drawInterval);
-            clearInterval(downInterval);
-            save_wrap.style = "display:";
-            save_img.src = "images/fail.png";
+            clearTimeout(timeout)
+            save_area.style = "display:";
+
+            if(resultNum === 2){ // 실패
+                save_img.src = "images/fail.png";
+            }else{ // 성공
+                save_img.src = "images/pass.png";
+            }
         }
     }// start
 
-
+    
     
 
+    function nextStep (){
+        alert('next');
+        location.reload();
+    }
+
+    function Replay(){
+        location.reload();
+    }
 
 
+    function resultSave(){
+
+    }
 
     // 클릭 횟수에 대한 변수
     var count = 0;
-
     // 게임시작 버튼
     var textButton = document.querySelector(".text_button");
     textButton.addEventListener("click", function(){

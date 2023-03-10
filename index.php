@@ -90,7 +90,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     <div class="save_wrap" style="display: none;">
         <div class="save_area">
             <div class="save_img">
-                <img class="save_img_class" src="" style="display: ">
+                <img src="" class="save_img_class" style="width: 100px; display: none;">
             </div>
             <div class="save_btns">
                 <button>Retry</button>

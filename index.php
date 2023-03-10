@@ -83,16 +83,16 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-      <!-- 성공, 실패, 다음단계 팝업 -->
-    <!-- <div class="save_area" style="display: none;">
-        <img class="save_img" src="" style="display: ;">
-    </div> -->
-
-    <div class="save_area" style="display: ;">
-        <img class="save_img" src="images/pass.png">
-        <div class="save_btns">
-            <button id="retry_btn">Retry</button>
-            <button id="next_btn">Next</button>
+    <!-- 성공, 실패 팝업 -->
+    <div class="save_wrap" style="display: ;">
+        <div class="save_area">
+            <div class="save_img">
+                <img class="pass_img" src="images/pass.png" style="display: ">
+            </div>
+            <div class="save_btns">
+                <button>Retry</button>
+                <button>Next</button>
+            </div>
         </div>
     </div>
 

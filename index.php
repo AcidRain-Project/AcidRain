@@ -64,7 +64,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                              90% => style="width: calc(100% - 10%); -->
                         <div id="time" class="score_time">
                             <img class="score_time_img" src="images/lv_bar_01.png">
-                            <div class="score_bar_inner" style="width: calc(100% - 30%);"></div>
+                            <div class="score_bar_inner" style="width: calc(100% - 0%);"></div>
                         </div>
                     </div>
                 </div>
@@ -83,11 +83,11 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-    <!-- 성공, 실패, 다음단계 팝업 -->
+      <!-- 성공, 실패, 다음단계 팝업 -->
     <div class="save_wrap" style="display: none;">
         <img class="save_img" src="images/pass.png" style="display: ;">
         <!-- <img class="save_img fail" src="images/fail.png" style="display: ;"> -->
-
+        <img class="save_img next" src="images/next.png" style="display: ;">
     </div>
 
 
@@ -95,27 +95,14 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
 <script>
     $(document).ready(function(){
-        // for(let word of NowArrAcidRainActivityWord){
-        //     console.log(word);
-        //     for(let i=0; i<NowArrAcidRainActivityWord.length; i++){
-        //         view_wordSpan.innerHTML = word;
-        //         view_inner.appendChild(view_wordSpan);
-        //     }
-            
-        // }
-        
-        // for(let i=0; i<NowArrAcidRainActivityWord.length; i++){
-        //     let word = NowArrAcidRainActivityWord[i];
-        //     console.log(word);
-        //     view_wordSpan.id= "word_"+i
-        //     view_wordSpan.innerHTML = word;
-        //     view_inner.appendChild(view_wordSpan);
 
-        // }
-        
-        // document.querySelector('.word_list').appendChild();
     });
-    
+    /*  스코어 논의 필요
+        맞춰야 되는 스코어 DB
+        바다에 빠지면 -1
+        맞추면 + 1 
+        맞추지 못하면 0
+    */
     let AcidRainBgImage = '<?=$ContentAcidRainBgImage?>';
     let AcidRainSuccessScore = <?=$ContentAcidRainSuccessScore?>;
     let AcidRainActivityWordNumbers = <?=$ContentAcidRainActivityWordNumbers?>;
@@ -128,11 +115,11 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
     // 총 단어 배열 
     let ArrAcidRainActivityWord = (AcidRainActivityWord.split(','));
-    
     //  현대 단어 10개
     let NowArrAcidRainActivityWord = ArrAcidRainActivityWord.slice(0,9);
     // 다음 단어 배열
     let NextArrAcidRainActivityWord = ArrAcidRainActivityWord.slice(10);
+
     console.log(ArrAcidRainActivityWord);
     console.log(NowArrAcidRainActivityWord);
     console.log(NextArrAcidRainActivityWord);
@@ -142,6 +129,8 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let save_wrap = document.querySelector('.save_wrap'); // 끝났을때 이미지
     let save_img = document.querySelector('.save_img'); // 끝났을때 이미지
     let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
+    
+    
     let newWord = [];
 
     // word의 각 글자마다 top을 주기위한 배열 초기화
@@ -162,140 +151,137 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
     // 점수
     let score = 0;
+    let bar_score = 0;
+
     let scoreText = document.querySelector(".score_text");
+    let score_bar = document.querySelector(".score_bar_inner"); // 점수 바
     scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+
     
-    // word배열의 index 값에 대한 변수
     function start(){
-        let drawInterval = setInterval(function(){}, DRAWTIME);
-        let downInterval = setInterval(function(){}, DRAWTIME);
-
+        // word배열의 index 값에 대한 변수
         let idx = 0;
-        // 화면에 글자를 뿌려주기 위한 메서드
-        function draw(){
-            var randomWord = 0;
-            var temp = null;
+        
+       /*  let randomWord = 0;
+        let temp = null;
+        랜덤으로 word 배열을 섞어주기 위한 for문
+        for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
+
+            randomWord = Math.round(Math.random() * (ArrAcidRainActivityWord.length - 1));
+            temp = ArrAcidRainActivityWord[randomWord];
+            ArrAcidRainActivityWord[randomWord] = ArrAcidRainActivityWord[i];
+            ArrAcidRainActivityWord[i] = temp;
+        } */
             
-            // 랜덤으로 word 배열을 섞어주기 위한 for문
-            // for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
-                //     randomWord = Math.round(Math.random() * (ArrAcidRainActivityWord.length - 1));
-                //     temp = ArrAcidRainActivityWord[randomWord];
-                //     ArrAcidRainActivityWord[randomWord] = ArrAcidRainActivityWord[i];
-                //     ArrAcidRainActivityWord[i] = temp;
-                // }
-                
-                
-                // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 setInteval 메서드
-                let drawInterval = setInterval(function(){
-                
-                var leftWidth = Math.round(Math.random() * 90);
-                var wordDiv = document.createElement("div");
-                wordDiv.style.width = WORDWIDTH + "px";
-                wordDiv.style.height = WORDHEIGHT + "px";
-                wordDiv.style.position = "absolute";
-                wordDiv.style.textAlign = "center";
-                // wordDiv.style.border="1px solid #000";
-                // wordDiv.style.display="inline";
-
-                // 폰트사이즈
-                var sizeChange = gameArea.clientWidth;
-                    if(sizeChange <= 938){
-                        wordDiv.style.fontSize = 14 + "px"
-                    }else if(sizeChange >= 939 && sizeChange <= 1249){
-                        wordDiv.style.fontSize = 18 + "px"
-                    }else if(sizeChange >= 1250 && sizeChange <= 1640){
-                        wordDiv.style.fontSize = 22 + "px"
-                    }else{
-                        wordDiv.style.fontSize = 24 + "px"
-                    }
-
-                
-                // 리스트 하나씩 삭제
-                $("#word_"+idx+"").addClass("active");
-                
-                
-                // 다음 리스트 추가 
-                if(NextArrAcidRainActivityWord[idx] !== undefined){
-                    let view_wordSpan = document.createElement('span');
-                    let next_idx = 10+idx;
-                    view_wordSpan.setAttribute('id', 'word_'+next_idx)
-                    view_wordSpan.innerHTML= NextArrAcidRainActivityWord[idx];
-                    view_inner.appendChild(view_wordSpan);
-                }
-                
-                //단어 비 내림
-                
-                wordDiv.innerHTML = ArrAcidRainActivityWord[idx++];
-                gameArea.appendChild(wordDiv);
-                
-                
-                
-
-
-                // 글자 width 값 까지 더하게 되면 gameArea의 범위를 넘어갈 수 있기때문에 안넘어가게 하기 위한 재설정
         
-                if(leftWidth + WORDWIDTH >= gameArea.clientWidth){
-                    wordDiv.style.left = (leftWidth - WORDWIDTH) + "%";
+        // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 setInteval 메서드
+        let drawInterval = setInterval(function(){
+            
+            var leftWidth = Math.round(Math.random() * 90);
+            var wordDiv = document.createElement("div");
+            wordDiv.style.width = WORDWIDTH + "px";
+            wordDiv.style.height = WORDHEIGHT + "px";
+            wordDiv.style.position = "absolute";
+            wordDiv.style.textAlign = "center";
+            // wordDiv.style.border="1px solid #000";
+            // wordDiv.style.display="inline";
+
+            // 폰트사이즈
+            var sizeChange = gameArea.clientWidth;
+                if(sizeChange <= 938){
+                    wordDiv.style.fontSize = 14 + "px"
+                }else if(sizeChange >= 939 && sizeChange <= 1249){
+                    wordDiv.style.fontSize = 18 + "px"
+                }else if(sizeChange >= 1250 && sizeChange <= 1640){
+                    wordDiv.style.fontSize = 22 + "px"
                 }else{
-                    wordDiv.style.left = leftWidth + "%";
+                    wordDiv.style.fontSize = 24 + "px"
                 }
 
-                newWord.push(wordDiv);
+            
+            // 리스트 하나씩 삭제
+            $("#word_"+idx+"").addClass("active");
+            
+            
+            // 다음 리스트 추가 
+            if(NextArrAcidRainActivityWord[idx] !== undefined){
+                let view_wordSpan = document.createElement('span');
+                let next_idx = 10+idx;
+                view_wordSpan.setAttribute('id', 'word_'+next_idx)
+                view_wordSpan.innerHTML= NextArrAcidRainActivityWord[idx];
+                view_inner.appendChild(view_wordSpan);
+            }
+            
+            //단어 비 내림
+            
+            wordDiv.innerHTML = ArrAcidRainActivityWord[idx++];
+            gameArea.appendChild(wordDiv);
 
-                // 글자가 다 뿌려지면 setInterval() 중지
-                if(newWord.length === ArrAcidRainActivityWord.length){
-                    clearInterval(drawInterval)
-                }
-            }, DRAWTIME);
-        }
+            // 글자 width 값 까지 더하게 되면 gameArea의 범위를 넘어갈 수 있기때문에 안넘어가게 하기 위한 재설정
+            if(leftWidth + WORDWIDTH >= gameArea.clientWidth){
+                wordDiv.style.left = (leftWidth - WORDWIDTH) + "%";
+            }else{
+                wordDiv.style.left = leftWidth + "%";
+            }
 
-        function down(){
-            // 일정한 간격으로 글자를 내려줌.
-            let downInterval = setInterval(function(){
-                for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
-                    console.log(i , ArrAcidRainActivityWord.length);
+            newWord.push(wordDiv);
+
+            // 글자가 다 뿌려지면 setInterval() 중지
+            if(newWord.length === ArrAcidRainActivityWord.length){
+                clearInterval(drawInterval)
+            }
+        }, DRAWTIME);
         
-                    if(i < newWord.length){
-                        newWord[i].style.top = wordTop[i] + "px";
-        
-                        // 글자의 범위가 gameArea 바깥으로 나갔을 경우 제거
-                        if(wordTop[i] + WORDHEIGHT >= gameArea.offsetHeight){
-                            if(gameArea.contains(newWord[i])) {
-                                gameArea.removeChild(newWord[i]);
-                                
-                                score -=1 ;
-                                scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
-                                if(gameArea.contains(newWord[i])==false && i == ArrAcidRainActivityWord.length){
-                                    console.log('222222222222');
-                                    gameover(drawInterval,downInterval);
-                                }
 
-                                if(score == -2){ /*  몇점 실패 논의 필요 */    
-                                    gameover(drawInterval,downInterval);
-                                }
+        // 일정한 간격으로 글자를 내려줌.
+        let downInterval = setInterval(function(){
+            for(let i = 0; i < ArrAcidRainActivityWord.length; i++){
+                if(i < newWord.length){
+                    newWord[i].style.top = wordTop[i] + "px";
+    
+                    // 글자의 범위가 gameArea 바깥으로 나갔을 경우 제거
+                    if(wordTop[i] + WORDHEIGHT >= gameArea.offsetHeight){
+                        if(gameArea.contains(newWord[i])) {
+
+                            gameArea.removeChild(newWord[i]);
+                            // score -=1 ;
+                            (bar_score >= 0) ? 0 :
+                            bar_score -= 10;
+                            scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+                            score_bar.style = "width: calc(100% - "+bar_score+"%);";
+
+                            if(gameArea.length === 0 && i === newWord.length){
+                                console.log('222222222222');
+                                gameover(drawInterval,downInterval);
+                            }
+
+                            // 정한 갯수만큼 실패 
+                            if(score == -2){     
+                                gameover(drawInterval,downInterval);
                             }
                         }
-                        wordTop[i] += 40;
                     }
+                    wordTop[i] += 40;
                 }
-            }, DOWNTIME);
-        }// down
-
-        draw();
-        down();
+            }
+        }, DOWNTIME);
+       
 
         var textInput = document.querySelector(".text_input");
         textInput.addEventListener("keydown", function (e) {
             // enter 눌렀을 때
             let DivisionNum = 0;
+            
             if(e.keyCode === 13){
                 for(let i = 0; i < newWord.length; i++){
                     // 타자 친 단어와 화면의 단어가 일치했을 때
                     if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
-                        console.log('Right');
                         gameArea.removeChild(newWord[i]);
+
                         score += 1;
+                        bar_score += 10;
                         scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+                        score_bar.style = "width: calc(100% - "+bar_score+"%);";
 
                         // 끝났을 때
                         if(score == AcidRainSuccessScore){
@@ -313,24 +299,24 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 textInput.value = "";
             }
         }); //addEventListener
+
+        function gamewin(drawInterval,downInterval){
+            clearInterval(drawInterval);
+            clearInterval(downInterval);
+            save_wrap.style = "display:";
+        }
+        
+        function gameover(drawInterval,downInterval){
+            clearInterval(drawInterval);
+            clearInterval(downInterval);
+            save_wrap.style = "display:";
+            save_img.src = "images/fail.png";
+        }
     }// start
 
 
-    // 글자를 내려주기 위한 메서드
-
-    function gamewin(drawInterval,downInterval){
-        clearInterval(drawInterval);
-        clearInterval(downInterval);
-        save_wrap.style = "display:";
-        
-    }
     
-    function gameover(drawInterval,downInterval){
-        clearInterval(drawInterval);
-        clearInterval(downInterval);
-        save_wrap.style = "display:";
-        save_img.src = "images/fail.png";
-    }
+
 
 
 

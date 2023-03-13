@@ -114,6 +114,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         맞추지 못하면 0
         
     */
+    let ContentAcidRainID = '<?=$ContentAcidRainID?>';
     let AcidRainBgImage = '<?=$ContentAcidRainBgImage?>';
     let AcidRainSuccessScore = <?=$ContentAcidRainSuccessScore?>;
     let AcidRainActivityWordNumbers = <?=$ContentAcidRainActivityWordNumbers?>;
@@ -191,7 +192,41 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             ArrAcidRainActivityWord[i] = temp;
         } */
             
-        
+        let textInput = document.querySelector(".text_input");
+        let writeList = [];
+        textInput.addEventListener("keydown", function (e) {
+            // enter 눌렀을 때
+            let DivisionNum = 0;
+            
+            if(e.keyCode === 13){
+                writeList.push(textInput.value); 
+                for(let i = 0; i < newWord.length; i++){
+                    // 타자 친 단어와 화면의 단어가 일치했을 때
+                    if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
+                        gameArea.removeChild(newWord[i]);
+                        console.log('Right');
+                        score += 1;
+                        bar_score += 10;
+                        scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+                        score_bar.style = "width: calc(100% - "+bar_score+"%);";
+
+                        if(score == AcidRainSuccessScore){
+                            gameEnd(drawInterval,downInterval,1,writeList);
+                        }
+                        DivisionNum = 1;
+                    } 
+                }    
+
+                // 틀렸을 때
+                if(DivisionNum == 0){
+                    /* sy 틀렸을때 효과 추가  */
+                    console.log('Wrong');
+                }
+                
+                textInput.value = "";
+            }
+        }); //addEventListener
+
         // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 메서드
         let drawInterval = setInterval(function(){
             
@@ -274,7 +309,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
                             // 정한 갯수만큼 실패 
                             if(score == FAILSCORE){     
-                                gameEnd(drawInterval,downInterval,2);
+                                gameEnd(drawInterval,downInterval,2,writeList);
                             }
                         }
                     }
@@ -286,49 +321,20 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
     
 
-        var textInput = document.querySelector(".text_input");
-        textInput.addEventListener("keydown", function (e) {
-            // enter 눌렀을 때
-            let DivisionNum = 0;
-            
-            if(e.keyCode === 13){
-                for(let i = 0; i < newWord.length; i++){
-                    // 타자 친 단어와 화면의 단어가 일치했을 때
-                    if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
-                        gameArea.removeChild(newWord[i]);
-                        console.log('Right');
-                        score += 1;
-                        bar_score += 10;
-                        scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
-                        score_bar.style = "width: calc(100% - "+bar_score+"%);";
-
-                        if(score == AcidRainSuccessScore){
-                            gameEnd(drawInterval,downInterval,1);
-                        }
-                        DivisionNum = 1;
-                    } 
-                }    
-
-                // 틀렸을 때
-                if(DivisionNum == 0){
-                    /* sy 틀렸을때 효과 추가  */
-                    console.log('Wrong');
-                }
-                
-                textInput.value = "";
-            }
-        }); //addEventListener
+   
 
         // 30초 지났을때 실패 
         let timeout = setTimeout(() => {
             gameEnd(drawInterval,downInterval,2,timeout);
         }, STOPTIME);
 
-        function gameEnd(drawInterval,downInterval,resultNum){
+        function gameEnd(drawInterval,downInterval,resultNum,writeList){
             clearInterval(drawInterval);
             clearInterval(downInterval);
             clearTimeout(timeout)
             save_wrap.style = "display:";
+
+            resultSave(resultNum, writeList);
 
             if(resultNum === 2){ // 실패
                 save_img.src = "images/fail.png";
@@ -346,11 +352,33 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     next_btn.addEventListener("click",function(e){
         save_wrap.style = "display:none;"
         alert('다음페이지로');
-        location.href('./acid_rain_form.php');
+        location.reload();
+        // location.href('./acid_rain_form.php');
     });
     
-    function resultSave(){
+    function resultSave(resultNum,writeList){
+        // console.log("ID : "+ContentAcidRainID);
+        // console.log("resultNum : "+resultNum);
+        // console.log("writeList : "+writeList);
+        // console.log("ArrAcidRainActivityWord : "+ArrAcidRainActivityWord);
+        url = "./ajax_acid_rain_result.php";
+        
+        $.ajax(url, {
+            data: {
+                ContentAcidRainID : ContentAcidRainID,
+                resultNum : resultNum,
+                ArrAcidRainActivityWord : ArrAcidRainActivityWord,
+                // MemberID : MemberID,
+                writeList: writeList
+            },
+            success: function (data) {
+                console.log('success');
+                //location.reload();
+            },
+            error: function () {
 
+            }
+        });
     }
 
     // 클릭 횟수에 대한 변수

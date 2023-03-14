@@ -97,7 +97,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 <img class="save_img_class" src="" style="display: ">
             </div>
             <!-- 실패시 save_btns에 fail 추가하면 next_btn이 사라짐 -->
-            <div class="save_btns fail">
+            <div class="save_btns">
                 <button id="retry_btn">Retry</button>
                 <button id="next_btn">Next</button>
             </div>
@@ -152,7 +152,10 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let save_wrap = document.querySelector('.save_wrap'); // 이미지 
     let save_img = document.querySelector('.save_img_class'); // 끝났을때 이미지
     let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
-
+    let start_wrap = document.querySelector(".start_wrap"); // 시작시 팝업
+    let textInput = document.querySelector(".text_input");
+    
+    let save_btns = document.querySelector('.save_btns'); // 끝났을때 이미지
     let retry_btn = document.querySelector("#retry_btn"); 
     let next_btn = document.querySelector("#next_btn"); 
     
@@ -204,7 +207,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             ArrAcidRainActivityWord[i] = temp;
         } */
             
-        let textInput = document.querySelector(".text_input");
+        
         let writeList = [];
         textInput.addEventListener("keydown", function (e) {
             // enter 눌렀을 때
@@ -213,8 +216,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             if(e.keyCode === 13){
                 writeList.push(textInput.value); 
                 for(let i = 0; i < newWord.length; i++){
-                    // console.log("newworld : "+newWord[i].innerHTML);
-                    // console.log("gaemeArea : "+gaemeArea[i]);
+                    
                     // 타자 친 단어와 화면의 단어가 일치했을 때
                     if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
                         gameArea.removeChild(newWord[i]);
@@ -348,9 +350,9 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             resultSave(resultNum, writeList,score);
 
             if(resultNum === 2){ // 실패
+                save_btns.classList.add('fail');
                 save_img.src = "images/fail.png";
             }else{ // 성공
-                next_btn.style="display:";
                 save_img.src = "images/pass.png";
             }
         }
@@ -394,9 +396,14 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     // 게임시작 버튼
     var textButton = document.querySelector(".text_button");
     textButton.addEventListener("click", function(){
-        console.log('go');
         if (count === 0){
+            start_wrap.style="display:;";
             start();
+
+            setTimeout(() => {
+                start_wrap.style="display:none;";
+                textInput.focus();
+            }, 1000);
         }
         count++;
     });

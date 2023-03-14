@@ -87,7 +87,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         </div>
     </div>
 
-      <!-- 성공, 실패, 다음단계 팝업 -->
+    <!-- 성공, 실패, 다음단계 팝업 -->
     <!-- <div class="save_area" style="display: none;">
         <img class="save_img" src="" style="display: ;">
     </div> -->
@@ -96,14 +96,20 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             <div class="save_img">
                 <img class="save_img_class" src="" style="display: ">
             </div>
-            <div class="save_btns">
+            <!-- 실패시 save_btns에 fail 추가하면 next_btn이 사라짐 -->
+            <div class="save_btns fail">
                 <button id="retry_btn">Retry</button>
-                <button id="next_btn" style="display: none;">Next</button>
+                <button id="next_btn">Next</button>
             </div>
         </div>
     </div>
 
-    
+    <!-- 시작시 팝업 -->
+    <div class="start_wrap">
+        <div class="start_area">
+            <img class="start_img" src="images/treasure.png">
+        </div>
+    </div>
 
 </body>
 

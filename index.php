@@ -59,9 +59,13 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                     </div>
 
                     <div class="info_box">
-                        <div class="score_text"></div>
-                        <!-- 10% => style="width: calc(100% - 90%);
-                             90% => style="width: calc(100% - 10%); -->
+                        <div class="score_text">
+                            Score :
+                            <span id="now_score"> 0 </span>
+                            /
+                            <sapn id="ContentAcidRainSuccessScore"><?=$ContentAcidRainSuccessScore?></sapn>
+
+                        </div>
                         <div id="time" class="score_time">
                             <img class="score_time_img" src="images/lv_bar_01.png">
                             <div class="score_bar_inner" style="width: calc(100% - 0%);"></div>
@@ -75,7 +79,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 
                 <div class="textbox">
                     <div class="textbox_wrap">
-                        <input class="text_input" type="text">
+                        <input class="text_input " type="text">
                         <button class="text_button">게임시작</button>
                     </div>
                 </div>
@@ -94,7 +98,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             </div>
             <div class="save_btns">
                 <button id="retry_btn">Retry</button>
-                <button id="next_btn">Next</button>
+                <button id="next_btn" style="display: none;">Next</button>
             </div>
         </div>
     </div>
@@ -113,6 +117,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         맞추면 + 1 
         맞추지 못하면 0
         
+        setTimeout 적정 시간 
     */
     let ContentAcidRainID = '<?=$ContentAcidRainID?>';
     let AcidRainBgImage = '<?=$ContentAcidRainBgImage?>';
@@ -132,9 +137,9 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     // 다음 단어 배열
     let NextArrAcidRainActivityWord = ArrAcidRainActivityWord.slice(10);
 
-    console.log(ArrAcidRainActivityWord);
-    console.log(NowArrAcidRainActivityWord);
-    console.log(NextArrAcidRainActivityWord);
+    // console.log(ArrAcidRainActivityWord);
+    // console.log(NowArrAcidRainActivityWord);
+    // console.log(NextArrAcidRainActivityWord);
     
     
     let view_inner = document.querySelector('.view_inner'); // 상단 단어 리스트 
@@ -142,10 +147,14 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let save_img = document.querySelector('.save_img_class'); // 끝났을때 이미지
     let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
 
-    let retry_btn = document.querySelector("#retry_btn"); // 단어 내려오는 배경
-    let next_btn = document.querySelector("#next_btn"); // 단어 내려오는 배경
+    let retry_btn = document.querySelector("#retry_btn"); 
+    let next_btn = document.querySelector("#next_btn"); 
     
-    
+    let now_score = document.querySelector("#now_score"); // 현재 점수
+    let score_bar = document.querySelector(".score_bar_inner"); // 점수 바
+
+    // let scoreText = document.querySelector(".score_text");
+    // scoreText.innerHTML = "Score : <div id='score_span' style='nm'>" + score +"</div>" +" / " + AcidRainSuccessScore;
     
     let newWord = [];
 
@@ -171,10 +180,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     const FAILSCORE = -2;
     let score = 0;
     let bar_score = 0;
-
-    let scoreText = document.querySelector(".score_text");
-    let score_bar = document.querySelector(".score_bar_inner"); // 점수 바
-    scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+    
 
     
     function start(){
@@ -201,26 +207,29 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             if(e.keyCode === 13){
                 writeList.push(textInput.value); 
                 for(let i = 0; i < newWord.length; i++){
+                    // console.log("newworld : "+newWord[i].innerHTML);
+                    // console.log("gaemeArea : "+gaemeArea[i]);
                     // 타자 친 단어와 화면의 단어가 일치했을 때
                     if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
                         gameArea.removeChild(newWord[i]);
-                        console.log('Right');
                         score += 1;
                         bar_score += 10;
-                        scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+                        now_score.innerHTML = score;
                         score_bar.style = "width: calc(100% - "+bar_score+"%);";
 
                         if(score == AcidRainSuccessScore){
-                            gameEnd(drawInterval,downInterval,1,writeList);
+                            gameEnd(drawInterval,downInterval,1,writeList,score);
                         }
                         DivisionNum = 1;
                     } 
                 }    
-
-                // 틀렸을 때
+                // 틀렸을 때 진동 애니메이션
                 if(DivisionNum == 0){
-                    /* sy 틀렸을때 효과 추가  */
-                    console.log('Wrong');
+                    textInput.classList.add("vibration");
+                    setTimeout(() => {
+                            textInput.classList.remove("vibration");
+                        }, 500);
+                    
                 }
                 
                 textInput.value = "";
@@ -304,12 +313,12 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                                 bar_score -= 10;
                             } 
                             
-                            scoreText.innerHTML = "Score : " + score + " / " + AcidRainSuccessScore;
+                            now_score.innerHTML = score;
                             score_bar.style = "width: calc(100% - "+bar_score+"%);";
 
                             // 정한 갯수만큼 실패 
                             if(score == FAILSCORE){     
-                                gameEnd(drawInterval,downInterval,2,writeList);
+                                gameEnd(drawInterval,downInterval,2,writeList,score);
                             }
                         }
                     }
@@ -319,26 +328,23 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         }, DOWNTIME);
         
 
-    
-
-   
-
         // 30초 지났을때 실패 
         let timeout = setTimeout(() => {
-            gameEnd(drawInterval,downInterval,2,timeout);
+            gameEnd(drawInterval,downInterval,2,writeList,score);
         }, STOPTIME);
 
-        function gameEnd(drawInterval,downInterval,resultNum,writeList){
+        function gameEnd(drawInterval,downInterval,resultNum,writeList,score){
             clearInterval(drawInterval);
             clearInterval(downInterval);
             clearTimeout(timeout)
             save_wrap.style = "display:";
 
-            resultSave(resultNum, writeList);
+            resultSave(resultNum, writeList,score);
 
             if(resultNum === 2){ // 실패
                 save_img.src = "images/fail.png";
             }else{ // 성공
+                next_btn.style="display:";
                 save_img.src = "images/pass.png";
             }
         }
@@ -356,11 +362,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         // location.href('./acid_rain_form.php');
     });
     
-    function resultSave(resultNum,writeList){
-        // console.log("ID : "+ContentAcidRainID);
-        // console.log("resultNum : "+resultNum);
-        // console.log("writeList : "+writeList);
-        // console.log("ArrAcidRainActivityWord : "+ArrAcidRainActivityWord);
+    function resultSave(resultNum,writeList,score){
         url = "./ajax_acid_rain_result.php";
         
         $.ajax(url, {
@@ -368,11 +370,11 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 ContentAcidRainID : ContentAcidRainID,
                 resultNum : resultNum,
                 ArrAcidRainActivityWord : ArrAcidRainActivityWord,
+                score : score,
                 // MemberID : MemberID,
                 writeList: writeList
             },
             success: function (data) {
-                console.log('success');
                 //location.reload();
             },
             error: function () {

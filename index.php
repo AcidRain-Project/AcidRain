@@ -96,7 +96,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             <div class="save_img">
                 <img class="save_img_class" src="" style="display: ">
             </div>
-            <!-- 실패시 save_btns class에 fail 추가하면 next_btn이 사라짐 -->
+            <!-- 실패시 save_btns에 fail 추가하면 next_btn이 사라짐 -->
             <div class="save_btns">
                 <button id="retry_btn">Retry</button>
                 <button id="next_btn">Next</button>
@@ -105,7 +105,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     </div>
 
     <!-- 시작시 팝업 -->
-    <div class="start_wrap" style="display: ;">
+    <div class="start_wrap" style="display: none;">
         <div class="start_area">
             <img class="start_img" src="images/treasure.png">
         </div>
@@ -151,6 +151,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let view_inner = document.querySelector('.view_inner'); // 상단 단어 리스트 
     let save_wrap = document.querySelector('.save_wrap'); // 이미지 
     let save_img = document.querySelector('.save_img_class'); // 끝났을때 이미지
+    let game_wrap = document.querySelector(".game_wrap"); // 단어 내려오는 배경
     let gameArea = document.querySelector(".game_area"); // 단어 내려오는 배경
     let start_wrap = document.querySelector(".start_wrap"); // 시작시 팝업
     let textInput = document.querySelector(".text_input");
@@ -190,7 +191,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     let score = 0;
     let bar_score = 0;
     
-
+    
     
     function start(){
         // word배열의 index 값에 대한 변수
@@ -206,7 +207,12 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             ArrAcidRainActivityWord[randomWord] = ArrAcidRainActivityWord[i];
             ArrAcidRainActivityWord[i] = temp;
         } */
-            
+        function vibration(){
+            textInput.classList.add("vibration");
+                    setTimeout(() => {
+                            textInput.classList.remove("vibration");
+                        }, 500);
+        }
         
         let writeList = [];
         textInput.addEventListener("keydown", function (e) {
@@ -219,25 +225,28 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                     
                     // 타자 친 단어와 화면의 단어가 일치했을 때
                     if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
-                        gameArea.removeChild(newWord[i]);
-                        score += 1;
-                        bar_score += 10;
-                        now_score.innerHTML = score;
-                        score_bar.style = "width: calc(100% - "+bar_score+"%);";
+                        
+                        if(gameArea.contains(newWord[i])){
+                            gameArea.removeChild(newWord[i]);
+                            score += 1;
+                            bar_score += 10;
+                            now_score.innerHTML = score;
+                            score_bar.style = "width: calc(100% - "+bar_score+"%);";
+                            
+                            if(score == AcidRainSuccessScore){
+                                gameEnd(drawInterval,downInterval,1,writeList,score);
+                            }
+                            DivisionNum = 1;
 
-                        if(score == AcidRainSuccessScore){
-                            gameEnd(drawInterval,downInterval,1,writeList,score);
+                        }else{
+                            vibration();
                         }
-                        DivisionNum = 1;
                     } 
                 }    
                 // 틀렸을 때 진동 애니메이션
                 if(DivisionNum == 0){
-                    textInput.classList.add("vibration");
-                    setTimeout(() => {
-                            textInput.classList.remove("vibration");
-                        }, 500);
-                    
+               
+                    vibration();
                 }
                 
                 textInput.value = "";
@@ -245,16 +254,19 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
         }); //addEventListener
 
         // 일정한 간격으로 화면에 단어를 하나씩 뿌려주기 위한 메서드
+        let id_i =0; // wordDiv에 아이디 추가
+
         let drawInterval = setInterval(function(){
-            
             var leftWidth = Math.round(Math.random() * 90);
             var wordDiv = document.createElement("div");
+            wordDiv.id = id_i;
             wordDiv.style.width = WORDWIDTH + "px";
             wordDiv.style.height = WORDHEIGHT + "px";
             wordDiv.style.position = "absolute";
             wordDiv.style.textAlign = "center";
             // wordDiv.style.border="1px solid #000";
             // wordDiv.style.display="inline";
+            id_i++;
 
             // 폰트사이즈
             var sizeChange = gameArea.clientWidth;

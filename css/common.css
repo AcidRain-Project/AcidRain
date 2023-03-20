@@ -248,3 +248,17 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 @media all and (min-width:1920px){
     .start_num{ width: 500px; height: 500px;}
 }
+
+/* 정답, 오답 입력했을때 효과 */
+.text_wrong{ animation: text_wrong linear 1s forwards;}
+.text_correct{ animation: text_correct linear 0.3s forwards;}
+
+@keyframes text_wrong {
+    from{transform: scale(1); opacity: 1;}
+    to{transform: scale(1.5); opacity: 0;}
+}
+
+@keyframes text_correct {
+    from{transform: scale(1); opacity: 1;}
+    to{transform: scale(1.2); color: blue;}
+}

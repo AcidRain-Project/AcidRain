@@ -105,9 +105,9 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
     </div>
 
     <!-- 시작시 팝업 -->
-    <div class="start_wrap" style="display: none;">
+    <div class="start_wrap">
         <div class="start_area">
-            <img class="start_img" src="images/treasure.png">
+            <div class="start_num"></div>
         </div>
     </div>
 

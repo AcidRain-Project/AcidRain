@@ -41,6 +41,13 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 
 ?>
 <body>
+    <!-- 시작시 팝업 -->
+    <div class="start_wrap" style="display: none;">
+        <div class="start_area">
+            <div class="start_num"></div>
+        </div>
+    </div>
+
     <!-- 다른 배경이미지로 변경시 main_wrap의 background-images url을 변경 -->
     <div class="main_wrap" style="background-image: url(images/<?=$ContentAcidRainBgImage?>);">
         <div class="main_bg" style="background-image: url(images/main_bg_1080.png);">
@@ -101,13 +108,6 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 <button id="retry_btn">Retry</button>
                 <button id="next_btn">Next</button>
             </div>
-        </div>
-    </div>
-
-    <!-- 시작시 팝업 -->
-    <div class="start_wrap" style="display: none;">
-        <div class="start_area">
-            <div class="start_num"></div>
         </div>
     </div>
 

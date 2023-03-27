@@ -42,7 +42,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 ?>
 <body>
     <!-- 시작시 팝업 -->
-    <div class="start_wrap" style="display: none;">
+    <div class="start_wrap" style="display: ;">
         <div class="start_area">
             <div class="start_num"></div>
         </div>
@@ -86,7 +86,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                 
                 <div class="textbox">
                     <div class="textbox_wrap">
-                        <input class="text_input " type="text">
+                        <input class="text_input" type="text">
                         <button class="text_button">게임시작</button>
                     </div>
                 </div>

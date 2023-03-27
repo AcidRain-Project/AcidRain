@@ -82,6 +82,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             </div>
 
             <div class="game_wrap">
+                <!-- .game_area 안에있는 div들에 .correct 클래스를 추가하면 답을 맞췄을때 단어가 사라지는 효과가 적용됨 -->
                 <div class="game_area"></div>
                 
                 <div class="textbox">

@@ -196,11 +196,11 @@ body{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pac
 
 /* 효과들 */
 /* 맞췄을때 */
-.correct{ animation: correct 1.7s forwards;}
+.correct{ animation: correct 1s forwards;}
 
 @keyframes correct { 
  from{ transform: scale(1); opacity: 1;}
- to{ transform: scale(1.2); font-size: 1.3em; color: #809000; font-weight: 500; opacity: 0;}
+ to{ transform: scale(1.2); font-size: 1.5em; color: #809000; font-weight: 500; opacity: 0;}
 }
 
 /* 단어를 잘 못 입력했을 때 */

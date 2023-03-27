@@ -42,7 +42,7 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
 ?>
 <body>
     <!-- 시작시 팝업 -->
-    <div class="start_wrap" style="display: ;">
+    <div class="start_wrap" style="display: none;">
         <div class="start_area">
             <div class="start_num"></div>
         </div>
@@ -226,7 +226,6 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
                     
                     // 타자 친 단어와 화면의 단어가 일치했을 때
                     if(textInput.value.toLowerCase() === newWord[i].innerHTML.toLowerCase()){
-                        
                         if(gameArea.contains(newWord[i])){
                             gameArea.removeChild(newWord[i]);
                             score += 1;
@@ -261,10 +260,11 @@ $ContentAcidRainActivityWord = array_slice($ContentAcidRainActivityWord,0,$Conte
             var leftWidth = Math.round(Math.random() * 90);
             var wordDiv = document.createElement("div");
             wordDiv.id = id_i;
+            wordDiv.className = 'correct';
             wordDiv.style.width = WORDWIDTH + "px";
             wordDiv.style.height = WORDHEIGHT + "px";
             wordDiv.style.position = "absolute";
-            wordDiv.style.textAlign = "center";
+            wordDiv.style.textAlign = "center"; 
             // wordDiv.style.border="1px solid #000";
             // wordDiv.style.display="inline";
             id_i++;
